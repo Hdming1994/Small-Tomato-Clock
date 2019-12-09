@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -59,8 +59,10 @@ namespace FanQieZhong
 
             #region 番茄钟运行时变为半透明无边框样式
             this.FormBorderStyle = FormBorderStyle.None;//窗体无边框
-            this.Opacity = op;
+            this.Opacity = 1;
             #endregion
+
+            this.Height = 90;
         }
         /// <summary>
         /// 用计时器来控制实现 时间的减少
@@ -75,7 +77,7 @@ namespace FanQieZhong
                 hours=Timer / 3600;
                 min = (Timer - 3600 * hours) / 60;
                 second = Timer % 60;
-                label5.Text = hours.ToString() + "h" + min.ToString() + "m" + second.ToString() + "s";
+                label5.Text = hours.ToString() + "h " + min.ToString() + "m " + second.ToString() + "s";
                 progressBar1.Value = Timer;
             }
             else
@@ -83,6 +85,8 @@ namespace FanQieZhong
                 timer1.Enabled = false;
                 SetForegroundWindow(this.Handle);
                 MessageBox.Show("时间到了，休息一会吧^_^");
+                this.FormBorderStyle = FormBorderStyle.Sizable;
+                this.Height = 200;
                 SaveDate();
             }
         }
@@ -137,12 +141,15 @@ namespace FanQieZhong
         {
             timer1.Enabled = false;
             button2.Text = "暂停计时";
-            label5.Text = "00h00m00s";
+            label5.Text = "00h 00m 00s";
             Timer = 0;
             progressBar1.Value = 0;
             isrun = false;
             this.Opacity = 1;
             this.FormBorderStyle = FormBorderStyle.Sizable;
+
+            this.Height = 200;
+            
         }
 
         private void Form1_MouseEnter(object sender, EventArgs e)
@@ -157,7 +164,7 @@ namespace FanQieZhong
         {
             if(isrun)
             {
-                this.Opacity = op;
+                this.Opacity = 1;
             }
         }
 
@@ -185,6 +192,11 @@ namespace FanQieZhong
             int HTCAPTION = 0x0002;
             ReleaseCapture();
             SendMessage(this.Handle, WM_SYSCOMMAND, SC_MOVE + HTCAPTION, 0);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
